@@ -1,6 +1,12 @@
 var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+var extractSass = new ExtractTextPlugin({
+  filename: "[name].[contenthash].css",
+  disable: process.env.NODE_ENV === "development"
+});
 
 module.exports = {
   entry: {
@@ -10,8 +16,8 @@ module.exports = {
     extensions: ['.webpack.js', '.web.js', '.js', '.ts']
   },
   output: {
-    publicPath: '/js/',
-    path: path.join(__dirname, '/dist/js/'),
+    //publicPath: '/dist/',
+    path: path.resolve(__dirname, 'dist'),
     filename: '[name].[hash].build.js'
   },
   module: {
@@ -25,7 +31,26 @@ module.exports = {
           configuration: require('./tslint.json')
         }
       },
-      { test: /\.ts$/, loader: 'ts-loader' }
+      { test: /\.ts$/, loader: 'ts-loader' },
+      {
+        test: /\.css$/i,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: 'css-loader'
+        })
+      },
+      {
+        test: /\.scss$/i,
+        use: extractSass.extract({
+          use: [{
+            loader: "css-loader"
+          }, {
+            loader: "sass-loader"
+          }],
+          // use style-loader in development
+          fallback: "style-loader"
+        })
+      }
     ]
   },
   plugins: [
@@ -39,10 +64,7 @@ module.exports = {
       name: 'commons',
       minChunks: 2
     }),
-    new HtmlWebpackPlugin({
-      // inject: false,
-      template: 'index.html',
-      filename: './index.html'
-    }),
+    new HtmlWebpackPlugin(),
+    extractSass
   ]
 };
