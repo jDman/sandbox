@@ -2,13 +2,15 @@ var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-
+var FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 var extractSass = new ExtractTextPlugin({
   filename: "[name].[contenthash].css",
   disable: process.env.NODE_ENV === "development"
 });
 
 module.exports = {
+  watch: true,
+  devtool: '#cheap-module-eval-source-map',
   entry: {
     main: './src/main',
   },
@@ -16,7 +18,6 @@ module.exports = {
     extensions: ['.webpack.js', '.web.js', '.js', '.ts']
   },
   output: {
-    //publicPath: '/dist/',
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].[hash].build.js'
   },
@@ -64,6 +65,7 @@ module.exports = {
       name: 'commons',
       minChunks: 2
     }),
+    new FriendlyErrorsWebpackPlugin(),
     new HtmlWebpackPlugin(),
     extractSass
   ]
