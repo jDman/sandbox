@@ -4,6 +4,7 @@
   "description": "",
   "main": "main.js",
   "scripts": {
+    "start": "webpack-dev-server --open",
     "precompile": "webpack",
     "commit": "git-cz",
     "test": "mocha -r ts-node/register -r ignore-styles -r jsdom-global/register src/**/*.spec.ts"
@@ -31,7 +32,8 @@
     "ts-node": "^3.3.0",
     "tslint": "^5.8.0",
     "tslint-loader": "^3.5.3",
-    "webpack": "^3.8.1"
+    "webpack": "^3.8.1",
+    "webpack-dev-server": "^2.9.3"
   },
   "dependencies": {
     "rxjs": "^5.5.2",

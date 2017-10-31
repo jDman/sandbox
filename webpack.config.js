@@ -9,8 +9,10 @@ var extractSass = new ExtractTextPlugin({
 });
 
 module.exports = {
-  watch: true,
   devtool: '#cheap-module-eval-source-map',
+  devServer: {
+    contentBase: './dist'
+  },
   entry: {
     main: './src/main',
   },
