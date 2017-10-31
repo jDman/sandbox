@@ -68,7 +68,9 @@ module.exports = {
       minChunks: 2
     }),
     new FriendlyErrorsWebpackPlugin(),
-    new HtmlWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      title: 'My App'
+    }),
     extractSass
   ]
 };
