@@ -4,8 +4,6 @@ export function readonlySort<T>(arrayToSort: ReadonlyArray<T>, sortMethod: (a: T
 }
 
 export function insertionSort(array: Array<number>): Array<number> {
-  let sortedArray = array.slice();
-
   for(let index = 1; index < array.length; index++) {
     const current = array[index];
     let j = index - 1;
@@ -18,7 +16,7 @@ export function insertionSort(array: Array<number>): Array<number> {
     array[j + 1] = current;
   }
 
-  return sortedArray;
+  return array;
 }
 
 export function quickSort(array: Array<number>): Array<number> {
